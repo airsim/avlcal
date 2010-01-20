@@ -6,9 +6,10 @@
 // Boost
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
+// StdAir
+#include <stdair/basic/BasChronometer.hpp>
 // Avlcal
 #include <avlcal/basic/BasConst_AVLCAL_Service.hpp>
-#include <avlcal/basic/BasChronometer.hpp>
 #include <avlcal/command/AvailabilityCalculator.hpp>
 #include <avlcal/factory/FacAvlcalServiceContext.hpp>
 #include <avlcal/service/AVLCAL_ServiceContext.hpp>
@@ -80,7 +81,7 @@ namespace AVLCAL {
         lAVLCAL_ServiceContext.getAirlineCode();
       
       // Delegate the booking to the dedicated command
-      BasChronometer lAvlCalcChronometer;
+      stdair::BasChronometer lAvlCalcChronometer;
       lAvlCalcChronometer.start();
       AvailabilityCalculator::avlCalculate (lAirlineCode, iPartySize);
       const double lAvlCalcMeasure = lAvlCalcChronometer.elapsed();
