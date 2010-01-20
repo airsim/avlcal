@@ -21,9 +21,5 @@ libavlcal_la_LIBADD = \
 	$(top_builddir)/avlcal/service/libsvc.la
 libavlcal_la_LDFLAGS = \
 	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(top_builddir)/stdair/core/libstdair.la \
 	-version-info $(GENERIC_LIBRARY_VERSION)
-
-# Header files
-#pkginclude_HEADERS = $(service_h_sources)
-#nobase_nodist_pkginclude_HEADERS = $(top_builddir)/avlcal/config.h
-
