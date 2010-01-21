@@ -29,7 +29,8 @@ int main (int argc, char* argv[]) {
     logOutputFile.clear();
     
     // Initialise the list of classes/buckets
-    AVLCAL::AVLCAL_Service avlcalService (logOutputFile, lAirlineCode);
+    const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
+    AVLCAL::AVLCAL_Service avlcalService (lLogParams, lAirlineCode);
 
     // Perform an availability calculation
     avlcalService.avlCalculate (lPartySize);
