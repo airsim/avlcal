@@ -2,10 +2,11 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
-#include <exception>
+#include <cassert>
+// StdAir
+#include <stdair/service/Logger.hpp>
 // Avlcal
 #include <avlcal/command/AvailabilityCalculator.hpp>
-#include <avlcal/service/Logger.hpp>
 
 namespace AVLCAL {
 
@@ -16,12 +17,12 @@ namespace AVLCAL {
     try {
 
       // DEBUG
-      AVLCAL_LOG_DEBUG ("An availability calculation has been performed "
+      STDAIR_LOG_DEBUG ("An availability calculation has been performed "
                         << "for the airline " << iAirlineCode
                         << " for " << iPartySize << " passengers.");
     
     } catch (const std::exception& lStdError) {
-      AVLCAL_LOG_ERROR ("Error: " << lStdError.what());
+      STDAIR_LOG_ERROR ("Error: " << lStdError.what());
       throw AvlCalcultationException();
     }
   }

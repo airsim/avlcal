@@ -7,15 +7,13 @@
 #include <avlcal/factory/FacBomAbstract.hpp>
 #include <avlcal/factory/FacServiceAbstract.hpp>
 #include <avlcal/factory/FacSupervisor.hpp>
-#include <avlcal/service/Logger.hpp>
 
 namespace AVLCAL {
 
   FacSupervisor* FacSupervisor::_instance = NULL;
 
   // //////////////////////////////////////////////////////////////////////
-  FacSupervisor::FacSupervisor () :
-    _logger (NULL) {
+  FacSupervisor::FacSupervisor () {
   }
     
   // //////////////////////////////////////////////////////////////////////
@@ -40,15 +38,9 @@ namespace AVLCAL {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::registerLoggerService (Logger* ioLogger_ptr) {
-    _logger = ioLogger_ptr;
-  }
-
-  // //////////////////////////////////////////////////////////////////////
   FacSupervisor::~FacSupervisor() {
     cleanBomLayer();
     cleanServiceLayer();
-    cleanLoggerService();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -80,16 +72,10 @@ namespace AVLCAL {
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::cleanLoggerService() {
-    delete _logger; _logger = NULL;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanFactory () {
 	if (_instance != NULL) {
 		_instance->cleanBomLayer();
 		_instance->cleanServiceLayer();
-		_instance->cleanLoggerService();
 	}
     delete (_instance); _instance = NULL;
   }

@@ -3,27 +3,18 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// Boost
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/posix_time/ptime.hpp>
 // StdAir
 #include <stdair/basic/BasChronometer.hpp>
+#include <stdair/bom/BomManager.hpp> // for display()
+#include <stdair/service/Logger.hpp>
 // Avlcal
 #include <avlcal/basic/BasConst_AVLCAL_Service.hpp>
 #include <avlcal/command/AvailabilityCalculator.hpp>
 #include <avlcal/factory/FacAvlcalServiceContext.hpp>
 #include <avlcal/service/AVLCAL_ServiceContext.hpp>
-#include <avlcal/service/Logger.hpp>
 #include <avlcal/AVLCAL_Service.hpp>
 
 namespace AVLCAL {
-
-  // //////////////////////////////////////////////////////////////////////
-  AVLCAL_Service::
-  AVLCAL_Service (std::ostream& ioLogStream, const AirlineCode_T& iAirlineCode)
-    : _avlcalServiceContext (NULL) {
-    init (ioLogStream, iAirlineCode);
-  }
 
   // //////////////////////////////////////////////////////////////////////
   AVLCAL_Service::AVLCAL_Service ()
@@ -37,23 +28,38 @@ namespace AVLCAL {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  AVLCAL_Service::AVLCAL_Service (const AirlineCode_T& iAirlineCode)
+    : _avlcalServiceContext (NULL) {
+
+    // Initialise the context
+    init (iAirlineCode);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  AVLCAL_Service::AVLCAL_Service (const stdair::BasLogParams& iLogParams,
+                                  const AirlineCode_T& iAirlineCode)
+    : _avlcalServiceContext (NULL) {
+    
+    // Set the log file
+    logInit (iLogParams);
+
+    // Initialise the (remaining of the) context
+    init (iAirlineCode);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   AVLCAL_Service::~AVLCAL_Service () {
     // Delete/Clean all the objects from memory
     finalise();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void logInit (const LOG::EN_LogLevel iLogLevel,
-                std::ostream& ioLogOutputFile) {
-    Logger::instance().setLogParameters (iLogLevel, ioLogOutputFile);
+  void AVLCAL_Service::logInit (const stdair::BasLogParams& iLogParams) {
+    stdair::Logger::init (iLogParams);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void AVLCAL_Service::init (std::ostream& ioLogStream,
-                             const AirlineCode_T& iAirlineCode) {
-    // Set the log file
-    logInit (LOG::DEBUG, ioLogStream);
-
+  void AVLCAL_Service::init (const AirlineCode_T& iAirlineCode) {
     // Initialise the context
     AVLCAL_ServiceContext& lAVLCAL_ServiceContext = 
       FacAvlcalServiceContext::instance().create (iAirlineCode);
@@ -87,11 +93,11 @@ namespace AVLCAL {
       const double lAvlCalcMeasure = lAvlCalcChronometer.elapsed();
       
       // DEBUG
-      AVLCAL_LOG_DEBUG ("Availability Calculation: " << lAvlCalcMeasure << " - "
+      STDAIR_LOG_DEBUG ("Availability Calculation: " << lAvlCalcMeasure << " - "
                         << lAVLCAL_ServiceContext.display());
 
     } catch (const std::exception& error) {
-      AVLCAL_LOG_ERROR ("Exception: "  << error.what());
+      STDAIR_LOG_ERROR ("Exception: "  << error.what());
       throw AvlCalcultationException();
     }
   }
