@@ -244,6 +244,7 @@ AC_CONFIG_FILES(
 	stdair/config/Makefile
 	stdair/service/Makefile
 	stdair/core/Makefile
+	stdair/batches/Makefile
 	avlcal/Makefile
 	avlcal/basic/Makefile
 	avlcal/bom/Makefile
