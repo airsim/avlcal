@@ -1,12 +1,15 @@
-## bom sub-directory
+## avlcal/bom sub-directory
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
-noinst_LTLIBRARIES= libbom.la
+#
+noinst_LTLIBRARIES = libavlcalbom.la
 
-libbom_la_SOURCES= $(bom_h_sources) $(bom_cc_sources) 
-libbom_la_CXXFLAGS =
-libbom_la_LDFLAGS =
+libavlcalbom_la_SOURCES = $(avlcal_bom_h_sources) $(avlcal_bom_cc_sources) 
+libavlcalbom_la_CXXFLAGS = $(STDAIR_CFLAGS)
+libavlcalbom_la_LDFLAGS =
 
+#
 #pkgincludedir = $(includedir)/@PACKAGE@/bom
-#pkginclude_HEADERS = $(bom_h_sources)
+#pkginclude_HEADERS = $(avlcal_bom_h_sources)
+

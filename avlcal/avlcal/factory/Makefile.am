@@ -1,11 +1,15 @@
-## factory sub-directory
+## avlcal/factory sub-directory
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
-noinst_LTLIBRARIES= libfac.la
+#
+noinst_LTLIBRARIES = libavlcalfac.la
 
-libfac_la_SOURCES= $(fac_h_sources) $(fac_cc_sources) 
-libfac_la_CXXFLAGS =
+libavlcalfac_la_SOURCES = $(avlcal_fac_h_sources) $(avlcal_fac_cc_sources) 
+libavlcalfac_la_CXXFLAGS = $(STDAIR_CFLAGS)
+libavlcalfac_la_LDFLAGS =
 
+#
 #pkgincludedir = $(includedir)/@PACKAGE@/factory
-#pkginclude_HEADERS = $(fac_h_sources)
+#pkginclude_HEADERS = $(avlcal_fac_h_sources)
+

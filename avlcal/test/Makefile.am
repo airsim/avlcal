@@ -1,10 +1,10 @@
-## test sub-directory
+## test sub-directory of the AvlCal project
 include $(top_srcdir)/Makefile.common
 
 MAINTAINERCLEANFILES = Makefile.in
 
 ##
-SUBDIRS = samples stdair avlcal
+SUBDIRS = samples avlcal
 
 EXTRA_DIST =
 

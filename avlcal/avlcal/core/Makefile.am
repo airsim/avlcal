@@ -12,14 +12,14 @@ SUBDIRS =
 # Library
 lib_LTLIBRARIES = libavlcal.la
 
-libavlcal_la_SOURCES = $(service_h_sources) $(service_cc_sources)
+libavlcal_la_SOURCES = $(avlcal_service_h_sources) $(avlcal_service_cc_sources)
 libavlcal_la_LIBADD = \
-	$(top_builddir)/avlcal/basic/libbas.la \
-	$(top_builddir)/avlcal/bom/libbom.la \
-	$(top_builddir)/avlcal/factory/libfac.la \
-	$(top_builddir)/avlcal/command/libcmd.la \
-	$(top_builddir)/avlcal/service/libsvc.la
+	$(top_builddir)/avlcal/basic/libavlcalbas.la \
+	$(top_builddir)/avlcal/bom/libavlcalbom.la \
+	$(top_builddir)/avlcal/factory/libavlcalfac.la \
+	$(top_builddir)/avlcal/command/libavlcalcmd.la \
+	$(top_builddir)/avlcal/service/libavlcalsvc.la
 libavlcal_la_LDFLAGS = \
-	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) \
-	$(top_builddir)/stdair/core/libstdair.la \
+	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) $(STDAIR_LIBS) \
 	-version-info $(GENERIC_LIBRARY_VERSION)
+
