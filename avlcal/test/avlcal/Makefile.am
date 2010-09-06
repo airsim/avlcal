@@ -14,11 +14,10 @@ TESTS = $(check_PROGRAMS)
 XFAIL_TESTS = #
 
 AvlCalTestSuite_SOURCES = AvlCalTestSuite.hpp AvlCalTestSuite.cpp
-AvlCalTestSuite_CXXFLAGS= $(CPPUNIT_CFLAGS) $(BOOST_CFLAGS)
+AvlCalTestSuite_CXXFLAGS = $(CPPUNIT_CFLAGS) $(BOOST_CFLAGS) \
+	$(EXTRACC_CFLAGS) $(STDAIR_CFLAGS)
 AvlCalTestSuite_LDADD =
 AvlCalTestSuite_LDFLAGS = \
-		$(BOOST_LIBS) $(CPPUNIT_LIBS) \
-		$(top_builddir)/extracppunit/libextracppunit.la \
-		$(top_builddir)/stdair/core/libstdair.la \
+		$(BOOST_LIBS) $(CPPUNIT_LIBS) $(EXTRACC_LIBS) $(STDAIR_LIBS) \
 		$(top_builddir)/avlcal/core/libavlcal.la
 
