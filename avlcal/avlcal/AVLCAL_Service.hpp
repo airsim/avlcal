@@ -5,7 +5,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/BasLogParams.hpp>
 // Avlcal
 #include <avlcal/AVLCAL_Types.hpp>
