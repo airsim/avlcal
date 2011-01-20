@@ -1,4 +1,4 @@
-## top directory
+## top directory of the AvlCal project
 include $(top_srcdir)/Makefile.common
 
 ACLOCAL_AMFLAGS = -I config
@@ -30,7 +30,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure \
 EXTRA_DIST =
 
 # Build in these directories:
-SUBDIRS = avlcal $(TEST_DIR)
+SUBDIRS = avlcal samples $(TEST_DIR)
 
 
 # Configuration helpers
