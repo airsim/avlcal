@@ -29,9 +29,7 @@ namespace AVLCAL {
   // //////////////////////////////////////////////////////////////////////
   const std::string AVLCAL_ServiceContext::shortDisplay() const {
     std::ostringstream oStr;
-    oStr << "AVLCAL_ServiceContext: " << std::endl
-         << "Airline code: " << _airlineCode
-         << std::endl;
+    oStr << "AVLCAL_ServiceContext: " << "Airline code: " << _airlineCode;
     return oStr.str();
   }
 
