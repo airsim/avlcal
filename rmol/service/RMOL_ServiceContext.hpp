@@ -1,5 +1,5 @@
-#ifndef __AVLCAL_SVC_AVLCALSERVICECONTEXT_HPP
-#define __AVLCAL_SVC_AVLCALSERVICECONTEXT_HPP
+#ifndef __RMOL_SVC_RMOL_SERVICE_CONTEXT_HPP
+#define __RMOL_SVC_RMOL_SERVICE_CONTEXT_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -8,26 +8,34 @@
 #include <string>
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_inventory_types.hpp>
+#include <stdair/stdair_maths_types.hpp>
 #include <stdair/stdair_service_types.hpp>
 #include <stdair/service/ServiceAbstract.hpp>
-// Avlcal
-#include <avlcal/AVLCAL_Types.hpp>
+// RMOL
+#include <rmol/RMOL_Types.hpp>
 
-namespace AVLCAL {
+/// Forward declarations
+namespace stdair {
+  class STDAIR_Service;
+  class LegCabin;
+}
+
+namespace RMOL {
 
   /**
-   * @brief Class holding the context of the Avlcal services.
+   * @brief Inner class holding the context for the RMOL Service object.
    */
-  class AVLCAL_ServiceContext : public stdair::ServiceAbstract {
+  class RMOL_ServiceContext : public stdair::ServiceAbstract {
     /**
-     * The AVLCAL_Service class should be the sole class to get access to
+     * The RMOL_Service class should be the sole class to get access to
      * ServiceContext content: general users do not want to bother
      * with a context interface.
      */
-    friend class AVLCAL_Service;
-    friend class FacAvlcalServiceContext;
-
-  public:
+    friend class RMOL_Service;
+    friend class FacRmolServiceContext;
+    
+  private:
     // ///////// Getters //////////
     /**
      * Get the pointer on the STDAIR service handler.
@@ -42,20 +50,19 @@ namespace AVLCAL {
     stdair::STDAIR_Service& getSTDAIR_Service() const;
 
     /**
-     * Get the airline code.
-     */
-    const stdair::AirlineCode_T& getAirlineCode () const {
-      return _airlineCode;
-    }
-
-    /**
      * State whether or not RMOL owns the STDAIR service resources.
      */
     const bool getOwnStdairServiceFlag() const {
       return _ownStdairService;
     }
 
+    /**
+     * Get the leg-cabin sample for optimisation.
+     */
+    stdair::LegCabin& getLegCabinSample() const;
     
+
+  private:    
     // ///////// Setters //////////
     /**
      * Set the pointer on the STDAIR service handler.
@@ -67,14 +74,12 @@ namespace AVLCAL {
     }
 
     /**
-     * Set the airline code.
+     * Read the input data from a file.
      */
-    void setAirlineCode (const stdair::AirlineCode_T& iAirlineCode) {
-      _airlineCode = iAirlineCode;
-    }
+    void readFromInputFile (const std::string& iInputFileName);
 
     /**
-     * Clear the context.
+     * Clear the context (cabin capacity, bucket holder).
      */
     void reset();
 
@@ -82,12 +87,12 @@ namespace AVLCAL {
   private:
     // ///////// Display Methods //////////
     /**
-     * Display the short AVLCAL_ServiceContext content.
+     * Display the short STDAIR_ServiceContext content.
      */
     const std::string shortDisplay() const;
     
     /**
-     * Display the full AVLCAL_ServiceContext content.
+     * Display the full STDAIR_ServiceContext content.
      */
     const std::string display() const;
 
@@ -96,16 +101,15 @@ namespace AVLCAL {
      */
     const std::string describe() const;
 
-    
+
   private:
     // /////// Construction / initialisation ////////
     /** Constructors. */
-    AVLCAL_ServiceContext ();
-    AVLCAL_ServiceContext (const stdair::AirlineCode_T& iAirlineCode);
-    AVLCAL_ServiceContext (const AVLCAL_ServiceContext&);
-
+    RMOL_ServiceContext();
+    RMOL_ServiceContext (const RMOL_ServiceContext&);
+        
     /** Destructor. */
-    ~AVLCAL_ServiceContext();
+    ~RMOL_ServiceContext();
 
 
   private:
@@ -119,12 +123,7 @@ namespace AVLCAL {
      * State whether or not RMOL owns the STDAIR service resources.
      */
     bool _ownStdairService;
-
-  private:
-    // //////////// Attributes //////////////////
-    /** Airline code. */
-    stdair::AirlineCode_T _airlineCode;
   };
 
 }
-#endif // __AVLCAL_SVC_AVLCALSERVICECONTEXT_HPP
+#endif // __RMOL_SVC_RMOL_SERVICE_CONTEXT_HPP
