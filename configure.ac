@@ -238,6 +238,7 @@ AC_CONFIG_FILES(
 	avlcal/core/Makefile
 	avlcal/batches/Makefile
 	samples/Makefile
+	samples/RDS01/Makefile
 	test/Makefile
 	test/avlcal/Makefile
 )
