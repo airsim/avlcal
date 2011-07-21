@@ -235,6 +235,7 @@ AC_CONFIG_FILES(
 	airrac/command/Makefile
 	airrac/service/Makefile
 	airrac/config/Makefile
+	airrac/config/airrac-paths.hpp
 	airrac/core/Makefile
 	airrac/batches/Makefile
 	rmol/Makefile
