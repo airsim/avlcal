@@ -7,6 +7,7 @@
 #include <boost/make_shared.hpp>
 // StdAir
 #include <stdair/basic/BasChronometer.hpp>
+#include <stdair/bom/BomDisplay.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
 // Airrac
@@ -85,69 +86,6 @@ namespace AIRRAC {
     
     // Initialise the context
     initAirracService();
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  AIRRAC_Service::
-  AIRRAC_Service (const stdair::BasLogParams& iLogParams,
-                  const stdair::Filename_T& iYieldInputFilename) 
-    : _airracServiceContext (NULL) {
-
-    // Initialise the STDAIR service handler
-    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
-      initStdAirService (iLogParams);
-    
-    // Initialise the service context
-    initServiceContext();
-
-    // Add the StdAir service context to the AIRRAC service context
-    // \note AIRRAC owns the STDAIR service resources here.
-    const bool ownStdairService = true;
-    addStdAirService (lSTDAIR_Service_ptr, ownStdairService);
-    
-    // Initialise the (remaining of the) context
-    initAirracService (iYieldInputFilename);
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  AIRRAC_Service::
-  AIRRAC_Service (const stdair::BasLogParams& iLogParams,
-                  const stdair::BasDBParams& iDBParams,
-                  const stdair::Filename_T& iYieldInputFilename) 
-    : _airracServiceContext (NULL) {
-
-    // Initialise the STDAIR service handler
-    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
-      initStdAirService (iLogParams, iDBParams);
-    
-    // Initialise the service context
-    initServiceContext();
-
-    // Add the StdAir service context to the AIRRAC service context
-    // \note AIRRAC owns the STDAIR service resources here.
-    const bool ownStdairService = true;
-    addStdAirService (lSTDAIR_Service_ptr, ownStdairService);
-
-    // Initialise the (remaining of the) context
-    initAirracService (iYieldInputFilename);
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  AIRRAC_Service::
-  AIRRAC_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_Service_ptr,
-                  const stdair::Filename_T& iYieldInputFilename)
-    : _airracServiceContext (NULL) {
-
-    // Initialise the service context
-    initServiceContext();
-
-    // Store the STDAIR service object within the (AIRRAC) service context
-    // \note Airrac does not own the STDAIR service resources here.
-    const bool doesNotOwnStdairService = false;
-    addStdAirService (ioSTDAIR_Service_ptr, doesNotOwnStdairService);
-    
-    // Initialise the context
-    initAirracService (iYieldInputFilename);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -229,22 +167,17 @@ namespace AIRRAC {
   
   // ////////////////////////////////////////////////////////////////////
   void AIRRAC_Service::
-  initAirracService  (const stdair::Filename_T& iYieldInputFilename) {
+  parseAndLoad (const stdair::Filename_T& iYieldInputFilename) {
 
-    // Retrieve the AirRAC service context
+    // Retrieve the BOM root object.
     assert (_airracServiceContext != NULL);
     AIRRAC_ServiceContext& lAIRRAC_ServiceContext = *_airracServiceContext;
-
-    // Retrieve the StdAir service context
     stdair::STDAIR_Service& lSTDAIR_Service =
       lAIRRAC_ServiceContext.getSTDAIR_Service();
-    
-    // Get the root of the BOM tree, on which all of the other BOM objects
-    // will be attached
     stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
-
-    // Initialise the yield parser
-    YieldParser::generateYieldStore  (iYieldInputFilename, lBomRoot);
+    
+    // Initialise the airline inventories
+    YieldParser::generateYieldStore (iYieldInputFilename, lBomRoot);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -255,8 +188,8 @@ namespace AIRRAC {
 
     // Retrieve the AirRAC service context
     if (_airracServiceContext == NULL) {
-      throw stdair::NonInitialisedServiceException ("The AirRAC service has not "
-                                                    "been initialised");
+      throw stdair::NonInitialisedServiceException ("The AirRAC service has not"
+                                                    " been initialised");
     }
     assert (_airracServiceContext != NULL);
 
@@ -268,7 +201,7 @@ namespace AIRRAC {
       lAIRRAC_ServiceContext.getSTDAIR_Service();
 
     // Delegate the BOM building to the dedicated service
-    //lSTDAIR_Service.buildYieldSampleBom();
+    lSTDAIR_Service.buildSampleBomForAirRAC();
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -277,8 +210,8 @@ namespace AIRRAC {
 
     // Retrieve the AIRRAC service context
     if (_airracServiceContext == NULL) {
-      throw stdair::NonInitialisedServiceException ("The AirRAC service has not "
-                                                    "been initialised");
+      throw stdair::NonInitialisedServiceException ("The AirRAC service has not"
+                                                    " been initialised");
     }
     assert (_airracServiceContext != NULL);
 
@@ -295,22 +228,30 @@ namespace AIRRAC {
   // //////////////////////////////////////////////////////////////////////
   std::string AIRRAC_Service::csvDisplay() const {
 
-    // Retrieve the AirRAC service context
+    // Retrieve the AIRRAC service context
     if (_airracServiceContext == NULL) {
-      throw stdair::NonInitialisedServiceException ("The AirRAC service has not "
-                                                    "been initialised");
+      throw stdair::NonInitialisedServiceException ("The Airrac service "
+                                                    "has not been initialised");
     }
     assert (_airracServiceContext != NULL);
 
-    // Retrieve the AirRAC service context
     AIRRAC_ServiceContext& lAIRRAC_ServiceContext = *_airracServiceContext;
   
-    // Retrieve the STDAIR service object from the (AirRAC) service context
+    // Retrieve the STDAIR service object from the (Airrac) service context
     stdair::STDAIR_Service& lSTDAIR_Service =
       lAIRRAC_ServiceContext.getSTDAIR_Service();
 
-    // Delegate the BOM building to the dedicated service
-    return lSTDAIR_Service.csvDisplay();
+    // Get the root of the BOM tree, on which all of the other BOM objects
+    // are attached
+    stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+
+    // Delegate the BOM display to the dedicated service
+    std::ostringstream oCSVStr;
+    const bool& lfareQuoteBomTree = false;
+    stdair::BomDisplay::csvSimFQTAirRACDisplay (oCSVStr, lBomRoot,
+                                                lfareQuoteBomTree);
+    return oCSVStr.str();
+    
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -319,8 +260,8 @@ namespace AIRRAC {
 
     // Retrieve the AirRAC service context
     if (_airracServiceContext == NULL) {
-      throw stdair::NonInitialisedServiceException ("The AirRAC service has not "
-                                                    "been initialised");
+      throw stdair::NonInitialisedServiceException ("The AirRAC service has not"
+                                                    " been initialised");
     }
     assert (_airracServiceContext != NULL);
 
@@ -341,8 +282,8 @@ namespace AIRRAC {
     
     // Retrieve the Airrac service context
     if (_airracServiceContext == NULL) {
-      throw stdair::NonInitialisedServiceException ("The AirRAC service has not "
-                                                    "been initialised");
+      throw stdair::NonInitialisedServiceException ("The AirRAC service has not"
+                                                    " been initialised");
     }
     assert (_airracServiceContext != NULL);
     AIRRAC_ServiceContext& lAIRRAC_ServiceContext = *_airracServiceContext;
@@ -366,5 +307,22 @@ namespace AIRRAC {
     STDAIR_LOG_DEBUG ("Yield calculation: " << lYieldMeasure << " - "
                       << lAIRRAC_ServiceContext.display());
   }
-  
+
+  // ////////////////////////////////////////////////////////////////////
+  void AIRRAC_Service::updateYields () {
+    // Retrieve the AirRAC service context
+    assert (_airracServiceContext != NULL);
+    AIRRAC_ServiceContext& lAIRRAC_ServiceContext = *_airracServiceContext;
+
+    // Retrieve the StdAir service context
+    stdair::STDAIR_Service& lSTDAIR_Service =
+      lAIRRAC_ServiceContext.getSTDAIR_Service();
+    
+    // Get the root of the BOM tree, on which all of the other BOM objects
+    // will be attached
+    stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+
+    // Update the default yields to the booking classes.
+    YieldManager::updateYields (lBomRoot);
+  }
 }

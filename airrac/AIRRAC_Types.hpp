@@ -62,11 +62,27 @@ namespace AIRRAC {
       : stdair::FileNotFoundException (iWhat) {}
   };
 
+  class YieldFileParsingFailedException : public stdair::ParsingFileFailedException {
+  public:
+    /** Constructor. */
+    YieldFileParsingFailedException (const std::string& iWhat)
+      : stdair::ParsingFileFailedException (iWhat) {}
+  };
+
   class QuotingException : public stdair::RootException {
   };
 
   // //////// Type definitions specific to AirRAC /////////
-  /** ID for the Fare Quote system. */
+  /**
+   * Pointer on the AIRRAC Service handler.
+   */
+  class AIRRAC_Service;
+  typedef boost::shared_ptr<AIRRAC_Service> AIRRAC_ServicePtr_T;
+
+
+  /**
+   * ID for the Yield Quote system.
+   */
   typedef unsigned int YieldID_T;
 }
 #endif // __AIRRAC_AIRRAC_TYPES_HPP
