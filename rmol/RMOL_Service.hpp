@@ -11,12 +11,11 @@
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/stdair_service_types.hpp>
 // RMOL
-#include <rmol/RMOL_FORECASTER_Types.hpp>
-#include <rmol/RMOL_UNCONSTRAINER_Types.hpp>
-#include <rmol/RMOL_UTILITY_Types.hpp>
+#include <rmol/RMOL_Types.hpp>
 
 /// Forward declarations
 namespace stdair {
+  class FlightDate;
   struct BasLogParams;
   struct BasDBParams;
 }
@@ -139,10 +138,8 @@ namespace RMOL {
      * AIRINV_Service).
      *
      * @param STDAIR_ServicePtr_T the shared pointer of stdair service.
-     * @param const stdair::CabinCapacity& Capacity of the cabin of the
-     *        sample BOM tree.
      */
-    RMOL_Service (stdair::STDAIR_ServicePtr_T, const stdair::CabinCapacity_T&);
+    RMOL_Service (stdair::STDAIR_ServicePtr_T);
         
     /**
      * Destructor.
@@ -176,6 +173,12 @@ namespace RMOL {
      * Single resource optimization using EMSR-b heuristic.
      */
     void heuristicOptimisationByEmsrB();
+
+    /**
+     * Optimise (revenue management) an flight-date/network-date
+     */
+    bool optimise (stdair::FlightDate&, const stdair::DateTime_T&);
+
 
     /**
      * Build a sample BOM tree, and attach it to the BomRoot instance.

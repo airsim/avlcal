@@ -8,6 +8,10 @@
 // StdAir
 #include <stdair/stdair_inventory_types.hpp>
 #include <stdair/basic/BasChronometer.hpp>
+#include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/BomRoot.hpp>
+#include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegCabin.hpp>
 #include <stdair/command/CmdBomManager.hpp>
 #include <stdair/service/Logger.hpp>
@@ -17,7 +21,6 @@
 #include <rmol/factory/FacRmolServiceContext.hpp>
 #include <rmol/command/InventoryParser.hpp>
 #include <rmol/command/Optimiser.hpp>
-#include <rmol/command/Unconstrainer.hpp>
 #include <rmol/command/Forecaster.hpp>
 #include <rmol/service/RMOL_ServiceContext.hpp>
 #include <rmol/RMOL_Service.hpp>
@@ -142,8 +145,7 @@ namespace RMOL {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  RMOL_Service::RMOL_Service (stdair::STDAIR_ServicePtr_T ioSTDAIRServicePtr,
-                              const stdair::CabinCapacity_T& iCabinCapacity)
+  RMOL_Service::RMOL_Service (stdair::STDAIR_ServicePtr_T ioSTDAIRServicePtr)
     : _rmolServiceContext (NULL) {
     
     // Initialise the context
@@ -153,9 +155,6 @@ namespace RMOL {
     // \note RMOL does not own the STDAIR service resources here.
     const bool doesNotOwnStdairService = false;
     addStdAirService (ioSTDAIRServicePtr, doesNotOwnStdairService);
-
-    // Initialise the (remaining of the) context
-    initRmolService (iCabinCapacity);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -407,4 +406,20 @@ namespace RMOL {
     STDAIR_LOG_DEBUG ("Result: " << lLegCabin.displayVirtualClassList());
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  bool RMOL_Service::optimise (stdair::FlightDate& ioFlightDate,
+                               const stdair::DateTime_T& iRMEventTime) {    
+    // Call the functions in the forecaster and the optimiser.
+    // DEBUG
+    STDAIR_LOG_DEBUG ("Forecast");
+    bool isForecasted = Forecaster::forecast (ioFlightDate, iRMEventTime);
+    STDAIR_LOG_DEBUG ("Forecast successful: " << isForecasted);
+    if (isForecasted == true) {
+      STDAIR_LOG_DEBUG ("Optimise");
+      Optimiser::optimise (ioFlightDate);
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

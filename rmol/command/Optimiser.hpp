@@ -9,6 +9,7 @@
 
 // Forward declarations
 namespace stdair {
+  class FlightDate;
   class LegCabin;
 }
 
@@ -50,6 +51,16 @@ namespace RMOL {
        EMRS-b algorithm.
      */
     static void heuristicOptimisationByEmsrB (stdair::LegCabin&);
+
+    /**
+       Optimise a flight-date using leg-based Monte Carlo Integration.
+    */
+    static void optimise (stdair::FlightDate&);
+
+    /**
+     * Build the virtual class list for the given leg-cabin.
+     */
+    static void buildVirtualClassListForLegBasedOptimisation(stdair::LegCabin&);
 
   };
 }
