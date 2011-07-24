@@ -244,8 +244,9 @@ AC_CONFIG_FILES(
 	rmol/factory/Makefile
 	rmol/command/Makefile
 	rmol/service/Makefile
-	rmol/core/Makefile
 	rmol/config/Makefile
+	rmol/config/rmol-paths.hpp
+	rmol/core/Makefile
 	rmol/batches/Makefile
 	avlcal/Makefile
 	avlcal/basic/Makefile
@@ -254,6 +255,7 @@ AC_CONFIG_FILES(
 	avlcal/command/Makefile
 	avlcal/service/Makefile
 	avlcal/config/Makefile
+	avlcal/config/avlcal-paths.hpp
 	avlcal/core/Makefile
 	avlcal/batches/Makefile
 	test/Makefile

@@ -1,0 +1,20 @@
+#
+# Config file for the AvlCal package. It defines the following variables:
+#  AVLCAL_INCLUDE_DIRS - include directories for AvlCal
+#  AVLCAL_LIBRARY_DIRS - library directories for AvlCal (normally not used!)
+#  AVLCAL_BINARY_DIRS  - binary directories for AvlCal (normally not used!)
+#  AVLCAL_LIBRARIES    - libraries to link against
+#  AVLCAL_EXECUTABLES  - the AvlCal binaries/executables
+
+# Tell the user project where to find AvlCal headers and libraries
+set (AVLCAL_INCLUDE_DIRS "@AVLCAL_INCLUDE_DIRS@")
+set (AVLCAL_LIBRARY_DIRS "@AVLCAL_LIB_DIR@")
+set (AVLCAL_BINARY_DIRS "@AVLCAL_BIN_DIR@")
+
+# Library dependencies for AvlCal (contains definitions for the AvlCal IMPORTED
+# targets)
+include ("@AVLCAL_CMAKE_DIR@/avlcal-library-depends.cmake")
+
+# These are the AvlCal IMPORTED targets, created by avlcal-library-depends.cmake
+set (AVLCAL_LIBRARIES airraclib avlcallib)
+set (AVLCAL_EXECUTABLES avlcal)
