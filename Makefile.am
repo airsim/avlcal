@@ -30,7 +30,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure \
 EXTRA_DIST =
 
 # Build in these directories:
-SUBDIRS = avlcal samples $(TEST_DIR)
+SUBDIRS = avlcal $(TEST_DIR)
 
 
 # Configuration helpers

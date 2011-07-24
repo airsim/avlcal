@@ -73,9 +73,6 @@ test "x$ax_cv_boost_date_time" != xno && enable_exceptions=yes
 # Set the data directory for AvlCal
 pkgdatadir="${datadir}/avlcal"
 AC_SUBST(pkgdatadir)
-# Set the directory for data samples exported by AvlCal
-sampledir="${pkgdatadir}/samples"
-AC_SUBST(sampledir)
 
 # Check for info pages
 AC_ARG_ENABLE(info-doc, 
@@ -259,8 +256,6 @@ AC_CONFIG_FILES(
 	avlcal/config/Makefile
 	avlcal/core/Makefile
 	avlcal/batches/Makefile
-	samples/Makefile
-	samples/RDS01/Makefile
 	test/Makefile
 	test/airrac/Makefile
 	test/rmol/Makefile
