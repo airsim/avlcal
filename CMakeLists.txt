@@ -8,13 +8,14 @@ include (config/project_config_embeddable.cmake)
 ##
 # Project info
 set_project_names (avlcal AvlCal)
+set_project_brief ("C++ Seat Availability Calculator Library")
 set_project_versions (99 99 99)
 
 ##
 # Project options
 # The parameters are:
 #  * whether or not the documentation must be built and installed
-set_project_options (on)
+set_project_options (off)
 
 
 #####################################
@@ -22,7 +23,6 @@ set_project_options (on)
 #####################################
 #
 packaging_init (${PROJECT_NAME})
-packaging_set_description ("C++ Seat Availability Calculator Library")
 packaging_set_summary ("${PROJECT_NAME} aims at providing a clean API and a simple implementation (C++ library) of an Airline-related Seat Inventory Availability Calculation system. That library uses the Standard Airline IT C++ object model (http://sf.net/projects/stdair).
 
 ${PROJECT_NAME} makes an extensive use of existing open-source libraries for
