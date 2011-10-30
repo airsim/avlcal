@@ -39,7 +39,8 @@ packaging_set_other_options (TBZ2 "TBZ2;TGZ")
 ##            Dependencies            ##
 ########################################
 #
-get_external_libs (git "boost 1.41" mysql "soci 3.0" "stdair 0.35" doxygen)
+get_external_libs (git "boost 1.41" mysql "soci 3.0"
+	"stdair 0.35" "airrac 0.2" "rmol 0.25" doxygen)
 
 
 ##############################################
@@ -51,7 +52,7 @@ init_build ()
 
 ##
 # Sub-modules
-add_modules (airrac rmol ${PROJECT_NAME})
+add_modules (${PROJECT_NAME})
 
 ##
 # For other projects to use Avlcal, install a few helpers for standard
