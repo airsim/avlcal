@@ -91,7 +91,7 @@ namespace AVLCAL {
     /**
      * Initialise the STDAIR service (including the log service).
      */
-    void initStdAirService (const stdair::BasLogParams&);
+    stdair::STDAIR_ServicePtr_T initStdAirService (const stdair::BasLogParams&);
 
     /**
      * Attach the STDAIR service (holding the log and database services) to
@@ -101,6 +101,12 @@ namespace AVLCAL {
      */
     void addStdAirService (stdair::STDAIR_ServicePtr_T,
                            const bool iOwnStdairService);
+
+    /**
+     * Initialise.
+     * Do nothing for now
+     */
+    void initAVLCALService(); 
 
     /**
      * Finaliser.
