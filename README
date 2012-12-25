@@ -10,6 +10,10 @@ AvlCal makes an extensive use of existing open-source libraries for
 increased functionality, speed and accuracy. In particular the
 Boost (C++ Standard Extensions: http://www.boost.org) library is used.
 
+AvlCal is the one of the components of the Travel Market Simulator
+(http://www.travel-market-simulator). However, it may be used in a
+stand-alone mode.
+
 
 Getting and installing from the Fedora/CentOS/RedHat distribution:
 ------------------------------------------------------------------
@@ -18,14 +22,14 @@ yum -y install avlcal-devel avlcal-doc
 
 You can also get the RPM packages (which may work on Linux
 distributions like Novel Suse and Mandriva) from the Fedora repository
-(e.g., for Fedora 16, 
-http://fr2.rpmfind.net/linux/fedora/releases/16/Everything/)
+(e.g., for Fedora 18, 
+http://fr2.rpmfind.net/linux/fedora/releases/18/Everything/)
 
 
 Building the library and test binary from Git repository:
 ----------------------------------------------------------------
 The Sourceforge Git repository may be cloned as following:
-git clone ssh://avlcal.git.sourceforge.net/gitroot/avlcal/avlcal avlcalgit
+git clone ssh://git.code.sf.net/p/avlcal/code avlcalgit
 cd avlcalgit
 git checkout trunk
 
@@ -36,7 +40,7 @@ but names may vary according to distributions):
   * stdair-devel, airrac-devel, rmol-devel, airinv-devel
   * boost-devel
   * zeromq-devel
-  * readline-devel
+  * readline-devel, ncurses-devel
   * soci-mysql-devel
   * python-devel
   * gettext-devel (optional)
@@ -56,7 +60,8 @@ Then, as usual:
    -DWITH_AIRRAC_PREFIX=/home/user/dev/deliveries/airrac-stable \
    -DWITH_RMOL_PREFIX=/home/user/dev/deliveries/rmol-stable \
    -DWITH_AIRINV_PREFIX=/home/user/dev/deliveries/airinv-stable \
-   -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
+   -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
+   -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 * To build the project, type:
   make
 * To test the project, type:
@@ -64,10 +69,14 @@ Then, as usual:
 * To install the library (libavlcal*.so*) and the binary (avlcal),
   just type:
   make install
+* To browse the (just installed, if enabled) HTML documentation:
+  midori file://${INSTALL_BASEDIR}/avlcal-99.99.99/share/doc/avlcal-99.99.99/html/index.html
+* To browse the (just installed, if enabled) PDF documentation:
+  evince ${INSTALL_BASEDIR}/avlcal-99.99.99/share/doc/avlcal-99.99.99/html/refman.pdf
 * To package the source files, type:
   make dist
 * To package the binary and the (HTML and PDF) documentation:
   make package
 
-Denis Arnaud (October 2011)
+Denis Arnaud (October 2012)
 
