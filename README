@@ -70,9 +70,9 @@ Then, as usual:
   just type:
   make install
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/avlcal-99.99.99/share/doc/avlcal-99.99.99/html/index.html
+  midori file://${INSTALL_BASEDIR}/avlcal-stable/share/doc/avlcal-1.00.0/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/avlcal-99.99.99/share/doc/avlcal-99.99.99/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/avlcal-stable/share/doc/avlcal-1.00.0/html/refman.pdf
 * To package the source files, type:
   make dist
 * To package the binary and the (HTML and PDF) documentation:
