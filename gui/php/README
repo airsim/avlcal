@@ -1,0 +1,7 @@
+Entering the site:
+index.php
+=> dateSelection.php
+=> flightdate_list.php
+  => inv.php
+    => inv_legs.php
+    => segment_detail.php
