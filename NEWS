@@ -1,3 +1,8 @@
+2019-01-15:
+- Version 1.00.1
+- CMake nows finds out automatically the right Boost.Python library version
+- Python 3.4 is the new minimum required version
+
 2012-12-12:
 - Version 1.00.0
 - Works with StdAir-1.00.0, RMOL-1.00.0 and AirInv-1.00.0.

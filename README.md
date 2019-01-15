@@ -55,12 +55,13 @@ http://sourceforge.net/project/showfiles.php?group_id=295245
 To customise the following to your environment, you can alter the path
 to the installation directory:
 export INSTALL_BASEDIR=/home/user/dev/deliveries
+export AVLCAL_VER=1.00.1
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
 
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/avlcal-1.00.0 \
+  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/avlcal-${AVLCAL_VER} \
    -DWITH_STDAIR_PREFIX=/home/user/dev/deliveries/stdair-stable \
    -DWITH_AIRRAC_PREFIX=/home/user/dev/deliveries/airrac-stable \
    -DWITH_RMOL_PREFIX=/home/user/dev/deliveries/rmol-stable \
@@ -75,9 +76,9 @@ Then, as usual:
   just type:
   make install
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/avlcal-stable/share/doc/avlcal-1.00.0/html/index.html
+  midori file://${INSTALL_BASEDIR}/avlcal-stable/share/doc/avlcal-${AVLCAL_VER}/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/avlcal-stable/share/doc/avlcal-1.00.0/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/avlcal-stable/share/doc/avlcal-${AVLCAL_VER}/html/refman.pdf
 * To package the source files, type:
   make dist
 * To package the binary and the (HTML and PDF) documentation:
