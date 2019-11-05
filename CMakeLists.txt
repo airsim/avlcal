@@ -7,6 +7,7 @@ include (config/project_config_embeddable.cmake)
 
 ##
 # Project info
+project (avlcal)
 set_project_names (avlcal AvlCal)
 set_project_brief ("C++ Seat Availability Calculator Library")
 set_project_versions (1 00 1)
