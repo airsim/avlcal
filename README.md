@@ -67,11 +67,11 @@ Then, as usual:
 * To configure the project, type something like:
 ```bash
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/avlcal-${AVLCAL_VER} \
-   -DWITH_STDAIR_PREFIX=/home/user/dev/deliveries/stdair-stable \
-   -DWITH_AIRRAC_PREFIX=/home/user/dev/deliveries/airrac-stable \
-   -DWITH_RMOL_PREFIX=/home/user/dev/deliveries/rmol-stable \
-   -DWITH_AIRINV_PREFIX=/home/user/dev/deliveries/airinv-stable \
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/avlcal-${AVLCAL_VER} \
+   -DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
+   -DWITH_AIRRAC_PREFIX=${INSTALL_BASEDIR}/airrac-stable \
+   -DWITH_RMOL_PREFIX=${INSTALL_BASEDIR}/rmol-stable \
+   -DWITH_AIRINV_PREFIX=${INSTALL_BASEDIR}/airinv-stable \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
    -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 ```
