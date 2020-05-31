@@ -1,3 +1,6 @@
+* Sat May 30 2020 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.00.2
+- Removed dependency on Python
+
 * Tue Jan 15 2019 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.00.1
 - CMake nows finds out automatically the right Boost.Python library version
 - Python 3.4 is the new minimum required version
