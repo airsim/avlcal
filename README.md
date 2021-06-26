@@ -53,13 +53,13 @@ but names may vary according to distributions):
 
 ## Building the library and test binary from the tarball
 The latest stable source tarball (`avlcal*.tar.gz` or `.bz2`) can be found here:
-https://github.com/airsim/avlcal/archive/avlcal-1.00.2.tar.gz
+https://github.com/airsim/avlcal/archive/avlcal-1.00.3.tar.gz
 
 To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
 export INSTALL_BASEDIR="${HOME}/dev/deliveries"
-export AVLCAL_VER="1.00.2"
+export AVLCAL_VER="1.00.3"
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
 ```
 
