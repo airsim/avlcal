@@ -59,7 +59,7 @@ To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
 export INSTALL_BASEDIR="${HOME}/dev/deliveries"
-export AVLCAL_VER="1.00.6"
+export AVLCAL_VER="1.00.7"
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
 ```
 
